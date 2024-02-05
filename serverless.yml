@@ -1,0 +1,42 @@
+service: book-scraping-task
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  region: ap-south-1
+  runtime: nodejs20.x
+  memorySize: 1024
+  timeout: 300
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - sns:Publish
+          Resource:
+            - !Ref ChildTopic
+  environment:
+    CHILD_DETAILS_TOPIC_ARN: !Ref ChildDetailsTopic
+
+functions: 
+  parentFunction:
+    handler: parentFunction.handler
+  childFunction:
+    handler: childFunction.handler
+    events:
+      - sns:
+          arn: !Ref ChildTopic
+          topicName: child-details-topic-${sls:stage}
+          redrivePolicy:
+            deadLetterTargetRef: ChildDetailsDLQ
+
+resources:
+  Resources:
+    ChildDetailsTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: child-details-topic-${sls:stage}
+    ChildDetailsDLQ:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: child-details-DLQ-${sls:stage}

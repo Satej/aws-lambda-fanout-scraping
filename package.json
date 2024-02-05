@@ -1,0 +1,11 @@
+{
+  "name": "book-scraper-task",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "",
+  "dependencies": {
+    "@sparticuz/chromium": "^121.0.0",
+    "aws-sdk": "^2.1550.0",
+    "playwright-core": "^1.41.2"
+  }
+}
