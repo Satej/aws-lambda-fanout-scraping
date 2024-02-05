@@ -5,7 +5,7 @@ Architecture for same:
 ![Architecture](./serverless_lambda_fanout_image.jpg)
 
 Pre-requisite to run it:
-1. [serverless framework installed](https://www.serverless.com/framework/docs/getting-started){:target="_blank"}
+1. [serverless framework installed](https://www.serverless.com/framework/docs/getting-started)
 2. node, npm installed
 3. aws configure command setup
 
